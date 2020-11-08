@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename Java project &apos;Straight Lines&apos; to &apos;CustomShapes&apos;&#x0A;- Original element: &apos;Straight Lines&apos;&#x0A;- Renamed element: &apos;Straight Lines&apos;&#x0A;- Update references to refactored element" description="Rename Java project &apos;Straight Lines&apos;" flags="7" id="org.eclipse.jdt.ui.rename.java.project" input="=Straight Lines" name="CustomShapes" references="true" stamp="1600767543639" version="1.0"/>
+</session>

@@ -1,0 +1,32 @@
+package Editor;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+
+import Custom.BirdPanel;
+
+public class Editor {
+	
+	private final JFrame frame;
+	private BirdPanel birdPanel;
+	private final JPanel northPanel,southPanel;
+	private final JSplitPane settingPanel;
+	
+	private Editor() {
+		this.frame = new JFrame("Editor");
+		birdPanel= new BirdPanel();
+		this.frame.setLayout(new BorderLayout());
+		this.frame.setSize(new Dimension(1500,1000));
+		this.frame.add(this.birdPanel,BorderLayout.CENTER);
+		this.frame.setVisible(true);
+	}
+	
+	public static void main(String[] args) {
+		new Editor();
+	}
+
+}

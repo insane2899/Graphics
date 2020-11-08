@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;Graph.java&apos; to &apos;CustomShapes/src/Graph&apos;&#x0A;- Original project: &apos;CustomShapes&apos;&#x0A;- Destination element: &apos;CustomShapes/src/Graph&apos;&#x0A;- Original element: &apos;Lines.Graph.java&apos;&#x0A;- Update references to refactored element" description="Move compilation unit" destination="/src&lt;Graph" element1="/src&lt;Lines{Graph.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1601372786561" units="1" version="1.0"/>
+</session>

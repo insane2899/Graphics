@@ -1,0 +1,9 @@
+package Custom;
+
+public interface Animatable {
+	public void setAnimate();
+	public void setXcoord();
+	public void setYcoord();
+	public void setAngle();
+	
+}

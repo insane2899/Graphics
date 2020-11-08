@@ -1,0 +1,302 @@
+package Custom;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+import Circle.Circle;
+import Ellipse.Ellipse;
+import Graph.Graph;
+import Polygon.Polygon;
+
+public class BirdPanel extends JPanel implements MouseMotionListener,MouseListener,Animatable {
+
+	private int X,Y;
+	private Graph graph;
+	private JOptionPane p;
+	
+	private boolean graphCoordinates ;
+	private boolean fly ;
+	private boolean graphChanged;
+	
+	private int xcoord,ycoord;
+	private int angle;
+	private int graphSize;
+	private int scale_x,scale_y,stage;
+	
+	public BirdPanel() {
+		super();
+		this.graphSize = 6;
+		graph = null;
+		xcoord=0;
+		ycoord=0;
+		graphCoordinates = true;
+		fly = false;
+		scale_x=1;
+		stage = 3;
+		graphChanged = true;
+		scale_y=1;
+		angle = 0;
+		addMouseListener(this);
+		addMouseMotionListener(this);
+		setSize(1000,1000);
+		setVisible(true);
+	}
+	
+	public BirdPanel(int scale_x,int scale_y,int xcoord,int ycoord,int angle) {
+		super();
+		this.graphSize=6;
+		stage = 3;
+		graph = null;
+		graphCoordinates = true;
+		fly = false;
+		this.xcoord=xcoord;
+		graphChanged = true;
+		this.ycoord=ycoord;
+		this.scale_x=scale_x;
+		this.scale_y=scale_y;
+		this.angle = angle;
+		addMouseListener(this);
+		addMouseMotionListener(this);
+		//setSize(1000,1000);
+		setVisible(true);
+	}
+	
+	
+	
+	public int getXcoord() {
+		return xcoord;
+	}
+
+	public void setXcoord(int xcoord) {
+		this.xcoord = xcoord;
+	}
+	
+	public void setAnimate() {
+		this.fly = true;
+	}
+
+	public int getYcoord() {
+		return ycoord;
+	}
+
+	public void setYcoord(int ycoord) {
+		this.ycoord = ycoord;
+	}
+
+	public int getAngle() {
+		return angle;
+	}
+
+	public void setAngle(int angle) {
+		this.angle = angle;
+	}
+
+	public int getScale_x() {
+		return scale_x;
+	}
+
+	public void setScale_x(int scale_x) {
+		this.scale_x = scale_x;
+	}
+
+	public int getScale_y() {
+		return scale_y;
+	}
+
+	public void setScale_y(int scale_y) {
+		this.scale_y = scale_y;
+	}
+	
+	public void setGraphSize(int size) {
+		this.graphChanged = true;
+		this.graphSize = size;
+	}
+
+	public void paintComponent(Graphics g) {
+		g.clearRect(0, 0, getWidth(), getHeight());
+		if(this.graph==null||this.graphChanged) {
+			this.graph = new Graph(getWidth()/2,getHeight()/2,graphSize,1000,1000,Color.BLACK,
+					Color.CYAN);
+			this.graphChanged = false;
+		}
+		graph.setG(g);
+		if(graphCoordinates) {
+			graph.drawCoordinates();
+			drawBird(xcoord,ycoord,stage,angle,scale_x,scale_y);
+			if(fly){
+				flyBird(graph);
+			}
+		}
+	}
+	
+	public void flyBird(Graph graph) {
+		this.fly = false;
+		for(int i=0;i>=-130;i-=10) {
+			//drawBird(i,-i,(i/10)%6,0,1,1);
+			this.xcoord = i;
+			this.ycoord = -i;
+			this.stage = (i/10)%6;
+			this.angle = 0;
+			this.scale_x = 1;
+			this.scale_y = 1;
+			repaint();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void drawBird(int w,int h,int stage,int angle,int scale_x,int scale_y) {
+		stage = Math.abs(stage);
+		//head
+		Circle head = new Circle(graph,Color.BLACK,Color.YELLOW,-19+w,8+h,8);
+		head.getFillEllipse();
+		head.scaleEllipse(scale_x, scale_y);
+		head.rotateAngle(angle, 8+w, 1+h);
+		head.drawModifiedEllipse();
+		//head.fillEllipse();
+		
+		//top body
+		Ellipse body = new Ellipse(graph,Color.BLACK,Color.YELLOW,8+w,0+h,20,10);
+		body.getFillEllipse();
+		body.scaleEllipse(scale_x, scale_y);
+		body.rotateAngle(angle, 8+w, 1+h);
+		body.drawModifiedEllipse();
+		//body.fillEllipse();
+		
+		//wing
+		if(stage==2||stage==4) {
+			Circle wing = new Circle(graph,Color.BLACK,Color.PINK,8+w,-4+h,8);
+			wing.getFillEllipseTop(1+h);
+			wing.scaleEllipseTop(scale_x, scale_y,1+h);
+			wing.rotateAngleTop(angle, 8+w, 1+h,1+h);
+			wing.drawModifiedEllipse();
+			//wing.fillEllipseTop(1+h);
+			
+		}
+		else if(stage==0){
+			Circle wing = new Circle(graph,Color.BLACK,Color.PINK,8+w,-4+h,8);
+			wing.getFillEllipseBottom(1+h);
+			wing.scaleEllipseBottom(scale_x, scale_y,1+h);
+			wing.rotateAngleBottom(angle,8+w,1+h,1+h);
+			wing.drawModifiedEllipse();
+			//wing.fillEllipseBottom(1+h);
+		}
+		else if(stage==1||stage==5) {
+			Circle wing = new Circle(graph,Color.BLACK,Color.PINK,8+w,6+h,8);
+			wing.getFillEllipseBottom(1+h);
+			wing.scaleEllipseBottom(scale_x, scale_y,1+h);
+			wing.rotateAngleBottom(angle, 8+w, 1+h, 1+h);
+			wing.drawModifiedEllipse();
+			//wing.fillEllipseBottom(1+h);
+		}
+		else if(stage==3){
+			Circle wing = new Circle(graph,Color.BLACK,Color.PINK,8+w,6+h,8);
+			wing.getFillEllipseTop(1+h);
+			wing.scaleEllipseTop(scale_x, scale_y,1+h);
+			wing.rotateAngleTop(angle,8+w, 1+h, 1+h);
+			wing.drawModifiedEllipse();
+			//wing.fillEllipseTop(1+h);
+		}
+		
+		//eye
+		Circle eye = new Circle(graph,Color.BLACK,Color.BLACK,-19+w,12+h,1);
+		eye.setBorderThickness(5);
+		eye.getFillEllipse();
+		eye.scaleEllipse(scale_x, scale_y);
+		eye.rotateAngle(angle,8+w, 1+h);
+		eye.drawModifiedEllipse();
+		
+		//beak
+		Polygon beak = new Polygon(graph,Color.BLACK,Color.RED);
+		int a=-27+w,b=-27+w,c=-32+w;
+		int[] x = new int[3];
+		x[0]=a;
+		x[1]=b;
+		x[2]=c;
+		int[] y = new int[3];
+		y[0]=11+h;
+		y[1]=5+h;
+		y[2]=8+h;
+		beak.setPoints(x,y);
+		beak.getFillPolygon();
+		beak.rotateAngle(angle, 8+w, 1+h);
+		beak.scalePolygon(scale_x,scale_y);
+		beak.drawModifiedPolygon();
+		//beak.fillPolygon();
+		
+		//tail
+		Polygon tail = new Polygon(graph,Color.BLACK,Color.PINK);
+		int p=28+w,q=35+w,r=33+w;
+		int[] x1 = new int[3];
+		x1[0]=p;
+		x1[1]=q;
+		x1[2]=r;
+		int[] y1 = new int[3];
+		y1[0]=0+h;
+		y1[1]=0+h;
+		y1[2]=8+h;
+		tail.setPoints(x1, y1);
+		tail.getFillPolygon();
+		tail.rotateAngle(angle, 8+w, 1+h);
+		tail.scalePolygon(scale_x, scale_y);
+		tail.drawModifiedPolygon();
+		//tail.fillPolygon();
+	}
+	//Inherited abstract methods
+
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+		System.out.println("Dragged");
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		X = arg0.getX();
+		Y = arg0.getY();
+		xcoord = (int) graph.getCartisanX(X);
+		ycoord = (int) graph.getCartisanY(Y);
+		repaint();
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		//System.out.println("Pressed");
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
+

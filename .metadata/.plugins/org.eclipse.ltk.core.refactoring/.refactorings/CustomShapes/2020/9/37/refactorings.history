@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;DDA&apos; to &apos;Lines&apos;&#x0A;- Original project: &apos;Straight Lines&apos;&#x0A;- Original element: &apos;Straight Lines/src/DDA&apos;&#x0A;- Renamed element: &apos;Straight Lines/src/Lines&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;DDA&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src&lt;DDA" name="Lines" qualified="false" references="true" stamp="1599556226740" textual="false" version="1.0"/>
+</session>

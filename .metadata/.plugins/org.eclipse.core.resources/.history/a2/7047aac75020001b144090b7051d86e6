@@ -1,0 +1,25 @@
+package Editor;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+
+import javax.swing.JPanel;
+
+public class SettingPanel extends JPanel{
+	
+	private final JPanel northPanel;
+	private final JPanel southPanel;
+	
+	public SettingPanel() {
+		super(new BorderLayout());
+		setBackground(Color.WHITE);
+		this.northPanel = new JPanel(new BorderLayout());
+		this.southPanel = new JPanel(new BorderLayout());
+		this.add(this.northPanel,BorderLayout.NORTH);
+		this.add(this.southPanel,BorderLayout.SOUTH);
+		setPreferredSize(new Dimension(100,30));
+	}
+		
+
+}

@@ -1,0 +1,5 @@
+package Editor;
+
+public class SettingPanel extends JPanel{
+
+}

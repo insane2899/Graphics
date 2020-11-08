@@ -1,0 +1,37 @@
+package Editor;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+
+public class SettingPanel extends JPanel{
+	
+	private final JPanel northPanel;
+	private final JPanel southPanel;
+	private final JButton bird,tree;
+	private final JSlider size,angle;
+	
+	public SettingPanel() {
+		super(new BorderLayout());
+		setBackground(Color.WHITE);
+		this.northPanel = new JPanel(new BorderLayout());
+		this.southPanel = new JPanel(new BorderLayout());
+		this.add(this.northPanel,BorderLayout.NORTH);
+		this.add(this.southPanel,BorderLayout.SOUTH);
+		setPreferredSize(new Dimension(500,30));
+		this.bird = new JButton("Bird");
+		this.tree = new JButton("Tree");
+		northPanel.add(bird);
+		northPanel.add(tree);
+		this.size = new JSlider();
+		this.angle = new JSlider();
+		southPanel.add(size);
+		southPanel.add(angle);
+	}
+		
+
+}

@@ -1,0 +1,59 @@
+package Editor;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JSplitPane;
+import javax.swing.SwingConstants;
+
+import Custom.BirdPanel;
+
+public class Editor {
+	
+	private final JFrame frame;
+	private BirdPanel birdPanel;
+	private final JPanel northPanel,southPanel;
+	private final JSplitPane settingPanel;
+	private final JButton bird,tree;
+	private final JSlider size,angle;
+	private final JLabel sizeLabel,angleLabel;
+	
+	private Editor() {
+		this.frame = new JFrame("Editor");
+		birdPanel= new BirdPanel();
+		this.frame.setLayout(new BorderLayout());
+		this.frame.setSize(new Dimension(1500,1000));
+		this.frame.add(this.birdPanel,BorderLayout.CENTER);
+		this.northPanel = new JPanel(new GridLayout(1,2,20,20));
+		this.northPanel.setBorder(BorderFactory.createEmptyBorder(200,20,200,20));
+		this.southPanel = new JPanel(new GridLayout(4,1,20,20));
+		this.southPanel.setBorder(BorderFactory.createEmptyBorder(200,20,200,20));
+		this.bird = new JButton("Bird");
+		this.tree = new JButton("Tree");
+		northPanel.add(bird);
+		this.sizeLabel = new JLabel("Size");
+		this.angleLabel=new JLabel("Angle");
+		northPanel.add(tree);
+		this.size = new JSlider();
+		this.angle = new JSlider();
+		southPanel.add(sizeLabel);
+		southPanel.add(size);
+		southPanel.add(angleLabel);
+		southPanel.add(angle);
+		this.settingPanel = new JSplitPane(SwingConstants.HORIZONTAL,northPanel,southPanel);
+		this.frame.add(this.settingPanel,BorderLayout.EAST);
+		this.frame.setVisible(true);
+	}
+	
+	public static void main(String[] args) {
+		new Editor();
+	}
+
+}
