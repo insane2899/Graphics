@@ -8,5 +8,6 @@ public interface Animable {
 	public void setScale_x(int scale);
 	public void setScale_y(int scale);
 	public void setGraphSize(int size);
+	public void setSpeed(int speed);
 	
 }

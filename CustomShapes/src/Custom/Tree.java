@@ -37,7 +37,7 @@ public class Tree extends JFrame implements MouseMotionListener, KeyListener {
 	}
 
 	public static void main(String[] args) {
-		new TreePanel();
+		new Tree();
 
 	}
 	

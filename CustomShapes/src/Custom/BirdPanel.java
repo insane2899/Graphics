@@ -2,12 +2,16 @@ package Custom;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import Circle.Circle;
 import Ellipse.Ellipse;
@@ -20,13 +24,12 @@ public class BirdPanel extends JPanel implements MouseListener,Animable {
 	private Graph graph;
 	
 	private boolean graphCoordinates ;
-	private boolean fly ;
 	private boolean graphChanged;
 	
 	private int xcoord,ycoord;
 	private int angle;
 	private int graphSize;
-	private int scale_x,scale_y,stage;
+	private int scale_x,scale_y,stage,speed;
 	
 	public BirdPanel() {
 		super();
@@ -35,7 +38,6 @@ public class BirdPanel extends JPanel implements MouseListener,Animable {
 		xcoord=0;
 		ycoord=0;
 		graphCoordinates = true;
-		fly = false;
 		scale_x=1;
 		stage = 3;
 		graphChanged = true;
@@ -46,25 +48,10 @@ public class BirdPanel extends JPanel implements MouseListener,Animable {
 		setVisible(true);
 	}
 	
-	public BirdPanel(int scale_x,int scale_y,int xcoord,int ycoord,int angle) {
-		super();
-		this.graphSize=6;
-		stage = 3;
-		graph = null;
-		graphCoordinates = true;
-		fly = false;
-		this.xcoord=xcoord;
-		graphChanged = true;
-		this.ycoord=ycoord;
-		this.scale_x=scale_x;
-		this.scale_y=scale_y;
-		this.angle = angle;
-		addMouseListener(this);
-		//setSize(1000,1000);
-		setVisible(true);
+	@Override
+	public void setSpeed(int speed) {
+		this.speed = speed;
 	}
-	
-	
 	
 	public int getXcoord() {
 		return xcoord;
@@ -76,7 +63,7 @@ public class BirdPanel extends JPanel implements MouseListener,Animable {
 	
 	@Override
 	public void setAnimate() {
-		this.fly = true;
+		flyBird();
 	}
 
 	public int getYcoord() {
@@ -129,33 +116,30 @@ public class BirdPanel extends JPanel implements MouseListener,Animable {
 			this.graphChanged = false;
 		}
 		graph.setG(g);
-		if(graphCoordinates) {
-			graph.drawCoordinates();
-			drawBird(xcoord,ycoord,stage,angle,scale_x,scale_y);
-			if(fly){
-				flyBird(graph);
-			}
-		}
+		graph.drawCoordinates();
+		drawBird(xcoord,ycoord,stage,angle,scale_x,scale_y);
 	}
 	
-	public void flyBird(Graph graph) {
-		this.fly = false;
-		for(int i=0;i>=-130;i-=10) {
-			//drawBird(i,-i,(i/10)%6,0,1,1);
-			this.xcoord = i;
-			this.ycoord = -i;
-			this.stage = (i/10)%6;
-			this.angle = 0;
-			this.scale_x = 1;
-			this.scale_y = 1;
-			repaint();
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+	private void flyBird() {
+		new Timer(1100-this.speed*100,new ActionListener() {
+			int i = 0;
+			int initialx=xcoord;
+			int initialy=ycoord;
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				i-=10;
+				if(i==-130) {
+					System.out.println("Stopped");
+					((Timer)e.getSource()).stop();
+				}
+				else {
+					xcoord = i+initialx;
+					ycoord = -i+initialy;
+					stage = (i/10)%6;
+					repaint();
+				}
 			}
-		}
+		}).start();
 	}
 	
 	public void drawBird(int w,int h,int stage,int angle,int scale_x,int scale_y) {
@@ -263,6 +247,7 @@ public class BirdPanel extends JPanel implements MouseListener,Animable {
 		Y = arg0.getY();
 		xcoord = (int) graph.getCartisanX(X);
 		ycoord = (int) graph.getCartisanY(Y);
+		//System.out.println(xcoord+" "+ycoord);
 		repaint();
 		
 	}

@@ -4,12 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -31,20 +35,20 @@ public class Editor {
 	private final JPanel northPanel,southPanel;
 	private final JSplitPane settingPanel;
 	private final JButton bird,tree,fly;
-	private final JSlider size,angle,graphSize;
+	private final JSlider size,angle,graphSize,speed;
 	private final JLabel sizeLabel,angleLabel;
-	private Container contain;
 	
 	private Editor() {
 		this.frame = new JFrame("Editor");
 		this.drawPanel = new BirdPanel();
 		this.frame.setLayout(new BorderLayout());
+		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.frame.setSize(new Dimension(1500,1000));
 		this.frame.add(this.drawPanel,BorderLayout.CENTER);
 		this.northPanel = new JPanel(new GridLayout(2,2,20,20));
 		this.northPanel.setPreferredSize(new Dimension(500,30));
 		this.northPanel.setBorder(BorderFactory.createEmptyBorder(100,20,100,20));
-		this.southPanel = new JPanel(new GridLayout(6,1,20,20));
+		this.southPanel = new JPanel(new GridLayout(8,1,20,20));
 		this.southPanel.setPreferredSize(new Dimension(500,30));
 		this.southPanel.setBorder(BorderFactory.createEmptyBorder(50,20,50,20));
 		this.bird = new JButton("Bird");
@@ -57,7 +61,12 @@ public class Editor {
 				frame.validate();
 			}
 		});
+		Icon treeIcon = new ImageIcon("Icons/Tree.png");
+		Image img = ((ImageIcon) treeIcon).getImage();
+		Image newImg = img.getScaledInstance(50, 100, java.awt.Image.SCALE_SMOOTH);
+		treeIcon = new ImageIcon(newImg);
 		this.tree = new JButton("Tree");
+		tree.setSize(new Dimension(50,100));
 		this.tree.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -120,12 +129,26 @@ public class Editor {
 				drawPanel.repaint();
 			}
 		});
+		this.speed = new JSlider(1,5,3);
+		speed.setPaintTrack(true);
+		speed.setPaintTicks(true);
+		speed.setPaintLabels(true);
+		speed.setMajorTickSpacing(1);
+		speed.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				int sleepSense = speed.getValue();
+				((Animable)drawPanel).setSpeed(sleepSense);
+			}
+		});
 		southPanel.add(sizeLabel);
 		southPanel.add(size);
 		southPanel.add(angleLabel);
 		southPanel.add(angle);
 		southPanel.add(new JLabel("Graph Size"));
 		southPanel.add(graphSize);
+		southPanel.add(new JLabel("Animation Speed"));
+		southPanel.add(speed);
 		this.settingPanel = new JSplitPane(SwingConstants.HORIZONTAL,northPanel,southPanel);
 		this.settingPanel.resetToPreferredSizes();
 		this.frame.add(this.settingPanel,BorderLayout.EAST);

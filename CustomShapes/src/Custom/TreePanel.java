@@ -2,6 +2,8 @@ package Custom;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -13,6 +15,7 @@ import Polygon.Polygon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import Graph.Graph;
 
@@ -22,8 +25,9 @@ public class TreePanel extends JPanel implements MouseListener,Animable{
 	private int X,Y;
 	private Graph graph;
 	private int angle,scale_x,scale_y,xcoord,ycoord,graphSize;
+	private int speed;
 	
-	private boolean graphCoordinates,fall,hasChange;
+	private boolean graphCoordinates,hasChange;
 	
 	public TreePanel() {
 		graph = null;
@@ -34,11 +38,15 @@ public class TreePanel extends JPanel implements MouseListener,Animable{
 		xcoord = 0;
 		ycoord=0;
 		graphCoordinates = true;
-		fall = false;
 		hasChange=true;
 		addMouseListener(this);
 		setSize(1000,1000);
 		setVisible(true);
+	}
+	
+	@Override
+	public void setSpeed(int speed) {
+		this.speed = speed;
 	}
 
 	public static void main(String[] args) {
@@ -119,13 +127,29 @@ public class TreePanel extends JPanel implements MouseListener,Animable{
 		polygon.drawModifiedPolygon();
 		
 	}
-
+	
+	public void fall() {
+		new Timer(600-this.speed*100,new ActionListener() {
+			int count = 0;
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(count==-95) {
+					System.out.println("Stopped");
+					((Timer)e.getSource()).stop();
+				}
+				else {
+					angle = count;
+					repaint();
+				}
+				count-=5;
+			}
+		}).start();
+	}
 	//Inherited abstract methods
 
 	@Override
 	public void setAnimate() {
-		this.fall = true;
-		
+		fall();
 	}
 
 	@Override
@@ -168,9 +192,16 @@ public class TreePanel extends JPanel implements MouseListener,Animable{
 	public void mouseClicked(MouseEvent arg0) {
 		X = arg0.getX();
 		Y = arg0.getY();
-		xcoord = (int) graph.getCartisanX(X);
-		ycoord = (int) graph.getCartisanY(Y);
-		repaint();
+		if(arg0.getButton()==MouseEvent.BUTTON1) {
+			xcoord = (int) graph.getCartisanX(X);
+			ycoord = (int) graph.getCartisanY(Y);
+			repaint();
+			
+		}
+		else if(arg0.getButton()==MouseEvent.BUTTON3) {
+			//System.out.println("Here");
+			//drawTree((int)graph.getCartisanX(X),(int)graph.getCartisanY(Y),this.angle);
+		}
 		
 	}
 

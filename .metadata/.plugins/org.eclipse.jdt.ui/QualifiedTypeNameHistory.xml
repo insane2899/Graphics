@@ -20,7 +20,6 @@
     <fullyQualifiedTypeName name="java.lang.Thread"/>
     <fullyQualifiedTypeName name="Circle.Circle"/>
     <fullyQualifiedTypeName name="Polygon.Polygon"/>
-    <fullyQualifiedTypeName name="javax.swing.SwingUtilities"/>
     <fullyQualifiedTypeName name="java.awt.FlowLayout"/>
     <fullyQualifiedTypeName name="javax.swing.BorderFactory"/>
     <fullyQualifiedTypeName name="Ellipse.ChangedEllipse"/>
@@ -39,6 +38,12 @@
     <fullyQualifiedTypeName name="Custom.BirdPanel2"/>
     <fullyQualifiedTypeName name="javax.swing.event.ChangeListener"/>
     <fullyQualifiedTypeName name="javax.swing.event.ChangeEvent"/>
-    <fullyQualifiedTypeName name="java.awt.event.ActionEvent"/>
+    <fullyQualifiedTypeName name="javax.swing.SwingUtilities"/>
+    <fullyQualifiedTypeName name="java.util.Timer"/>
     <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
+    <fullyQualifiedTypeName name="java.awt.event.ActionEvent"/>
+    <fullyQualifiedTypeName name="javax.swing.Timer"/>
+    <fullyQualifiedTypeName name="javax.swing.Icon"/>
+    <fullyQualifiedTypeName name="javax.swing.ImageIcon"/>
+    <fullyQualifiedTypeName name="java.awt.Image"/>
 </qualifiedTypeNameHistroy>

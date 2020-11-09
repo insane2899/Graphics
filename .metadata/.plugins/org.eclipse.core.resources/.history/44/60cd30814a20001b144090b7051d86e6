@@ -1,7 +1,0 @@
-package Custom;
-
-import java.awt.Panel;
-
-public class BirdPanel extends Panel {
-
-}

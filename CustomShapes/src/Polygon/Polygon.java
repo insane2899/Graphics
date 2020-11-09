@@ -108,6 +108,9 @@ public class Polygon {
 	
 	private void getinside(int x,int y) {
 		int n = graph.getX_size(),m = graph.getY_size();
+		if(x+n<0 || x+n>=2*n || y+m<0 || y+n>=2*m) {
+			return;
+		}
 		colors[x+graph.getX_size()][y+graph.getY_size()]=2;
 		if(colors[x+1+n][y+m]==0) {
 			getinside(x+1,y);
