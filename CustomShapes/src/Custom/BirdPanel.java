@@ -25,11 +25,11 @@ public class BirdPanel extends JPanel implements MouseListener,Animable {
 	
 	private boolean graphCoordinates ;
 	private boolean graphChanged;
-	
+	private boolean multipleBird;
 	private int xcoord,ycoord;
 	private int angle;
 	private int graphSize;
-	private int scale_x,scale_y,stage,speed;
+	private int scale_x,scale_y,stage,speed,xcentre,ycentre;
 	
 	public BirdPanel() {
 		super();
@@ -37,6 +37,7 @@ public class BirdPanel extends JPanel implements MouseListener,Animable {
 		graph = null;
 		xcoord=0;
 		ycoord=0;
+		multipleBird = false;
 		graphCoordinates = true;
 		scale_x=1;
 		stage = 3;
@@ -45,6 +46,8 @@ public class BirdPanel extends JPanel implements MouseListener,Animable {
 		angle = 0;
 		addMouseListener(this);
 		setSize(1000,1000);
+		xcentre = getWidth()/2;
+		ycentre = getHeight()/2;
 		setVisible(true);
 	}
 	
@@ -103,6 +106,11 @@ public class BirdPanel extends JPanel implements MouseListener,Animable {
 	}
 	
 	@Override
+	public void setGroup() {
+		this.multipleBird = !this.multipleBird;
+	}
+	
+	@Override
 	public void setGraphSize(int size) {
 		this.graphChanged = true;
 		this.graphSize = size;
@@ -111,13 +119,22 @@ public class BirdPanel extends JPanel implements MouseListener,Animable {
 	public void paintComponent(Graphics g) {
 		g.clearRect(0, 0, getWidth(), getHeight());
 		if(this.graph==null||this.graphChanged) {
-			this.graph = new Graph(getWidth()/2,getHeight()/2,graphSize,1000,1000,Color.BLACK,
+			this.graph = new Graph(xcentre,ycentre,graphSize,1000,1000,Color.BLACK,
 					Color.CYAN);
 			this.graphChanged = false;
 		}
 		graph.setG(g);
 		graph.drawCoordinates();
-		drawBird(xcoord,ycoord,stage,angle,scale_x,scale_y);
+		if(!multipleBird) {
+			drawBird(xcoord,ycoord,stage,angle,scale_x,scale_y);
+		}
+		else {
+			drawBird(40,40,stage,angle,scale_x,scale_y);
+			drawBird(40,-40,stage,angle,scale_x,scale_y);
+			drawBird(-40,-40,stage,angle,scale_x,scale_y);
+			drawBird(-40,40,stage,angle,scale_x,scale_y);
+			//multipleBird=false;
+		}
 	}
 	
 	private void flyBird() {
@@ -275,6 +292,5 @@ public class BirdPanel extends JPanel implements MouseListener,Animable {
 		// TODO Auto-generated method stub
 		
 	}
-
 }
 

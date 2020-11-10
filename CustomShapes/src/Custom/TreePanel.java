@@ -26,8 +26,10 @@ public class TreePanel extends JPanel implements MouseListener,Animable{
 	private Graph graph;
 	private int angle,scale_x,scale_y,xcoord,ycoord,graphSize;
 	private int speed;
+	private boolean multipleTree;
+	private int xcentre,ycentre;
 	
-	private boolean graphCoordinates,hasChange;
+	private boolean hasChange;
 	
 	public TreePanel() {
 		graph = null;
@@ -36,12 +38,19 @@ public class TreePanel extends JPanel implements MouseListener,Animable{
 		scale_y=1;
 		graphSize = 6;
 		xcoord = 0;
+		multipleTree = false;
 		ycoord=0;
-		graphCoordinates = true;
 		hasChange=true;
 		addMouseListener(this);
 		setSize(1000,1000);
+		xcentre = getWidth()/2;
+		ycentre = getHeight()-150;
 		setVisible(true);
+	}
+	
+	@Override
+	public void setGroup() {
+		this.multipleTree=!this.multipleTree;
 	}
 	
 	@Override
@@ -57,15 +66,20 @@ public class TreePanel extends JPanel implements MouseListener,Animable{
 	public void paintComponent(Graphics g) {
 		g.clearRect(0, 0, getWidth(), getHeight());
 		if(this.graph==null||hasChange) {
-			this.graph = new Graph(getWidth()/2,getHeight()-150,graphSize,1000,1000,Color.BLACK,
+			this.graph = new Graph(xcentre,ycentre,graphSize,1000,1000,Color.BLACK,
 					new Color(132,187,235));
 			hasChange=false;
 		}
 		graph.setG(g);
-		if(graphCoordinates) {
-			graph.drawCoordinates();
-			
+		graph.drawCoordinates();
+		if(!multipleTree) {
 			drawTree(xcoord,ycoord,angle);
+		}
+		else {
+			drawTree(-40,-60,angle);
+			drawTree(-40,60,angle);
+			drawTree(40,-60,angle);
+			drawTree(40,60,angle);
 		}
 		//g.setColor(Color.BLACK);
 		//g.drawString("Mouse Location: X:"+X+" Y:"+Y, 10, getHeight()-10);
@@ -228,6 +242,7 @@ public class TreePanel extends JPanel implements MouseListener,Animable{
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }
 

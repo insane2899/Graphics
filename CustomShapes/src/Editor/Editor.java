@@ -1,16 +1,12 @@
 package Editor;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
-import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -34,7 +30,7 @@ public class Editor {
 	private JPanel drawPanel;
 	private final JPanel northPanel,southPanel;
 	private final JSplitPane settingPanel;
-	private final JButton bird,tree,fly;
+	private final JButton bird,tree,fly,group;
 	private final JSlider size,angle,graphSize,speed;
 	private final JLabel sizeLabel,angleLabel;
 	
@@ -84,11 +80,20 @@ public class Editor {
 				drawPanel.repaint();
 			}
 		});
+		this.group = new JButton("Group");
+		this.group.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				((Animable)drawPanel).setGroup();
+				drawPanel.repaint();
+			}
+		});
 		northPanel.add(bird);
 		this.sizeLabel = new JLabel("Size");
 		this.angleLabel=new JLabel("Angle");
 		northPanel.add(tree);
 		northPanel.add(fly);
+		northPanel.add(group);
 		this.size = new JSlider(1,5,1);
 		size.setPaintTrack(true);
 		size.setPaintTicks(true);

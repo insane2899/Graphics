@@ -1,6 +1,7 @@
 package Custom;
 
 public interface Animable {
+	
 	public void setAnimate();
 	public void setXcoord(int Xcoord);
 	public void setYcoord(int Ycoord);
@@ -9,5 +10,6 @@ public interface Animable {
 	public void setScale_y(int scale);
 	public void setGraphSize(int size);
 	public void setSpeed(int speed);
+	public void setGroup();
 	
 }
