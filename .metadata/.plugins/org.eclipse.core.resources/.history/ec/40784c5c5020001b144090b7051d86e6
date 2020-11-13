@@ -1,7 +1,0 @@
-package Editor;
-
-import javax.swing.JPanel;
-
-public class SettingPanel extends JPanel{
-
-}
