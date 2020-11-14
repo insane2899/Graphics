@@ -53,6 +53,8 @@ public class Polygon {
 	}
 	public void setGraph(Graph graph) {
 		this.graph = graph;
+	}
+	public void clearGraph() {
 		this.colors = new int[2*graph.getX_size()][2*graph.getY_size()];
 	}
 	public Color getBoundary() {
@@ -92,9 +94,7 @@ public class Polygon {
 		}
 		outer:for(int i=0;i<10;i++) {
 			for(int j=-5;j<=5;j++) {
-				//System.out.println((i+x[mini])+" "+(j+y[mini]));
 				if(inside(i+x[mini],j+y[mini])) {
-					//System.out.println((i+x[mini])+" "+(j+y[mini]));
 					getinside(i+x[mini],j+y[mini]);
 					break outer;
 				}
@@ -107,10 +107,10 @@ public class Polygon {
 			return false;
 		}
 		if(colors[x+graph.getX_size()][y+graph.getY_size()]==2) {
-			return false;
+			return true;
 		}
 		int count = 0;
-		for(int i=x-1+graph.getX_size();i>=0;i--) {
+		for(int i=x+graph.getX_size();i>=0;i--) {
 			if(colors[i][y+graph.getY_size()]==1) {
 				count++;
 			}
@@ -119,27 +119,31 @@ public class Polygon {
 			return false;
 		}
 		else if(count%2!=0) {
+			boolean flag1=true,flag2=true;
 			int count2=0;
 			if(y+graph.getY_size()-1>=0) {
-				for(int i=x-1+graph.getX_size();i>=0;i--) {
+				for(int i=x+graph.getX_size();i>=0;i--) {
 					if(colors[i][y+graph.getY_size()-1]==1) {
 						count2++;
 					}
 				}
 				if(count2%2==0) {
-					return false;
+					flag1=false;
 				}
 			}
 			count2=0;
 			if(y+graph.getY_size()+1<2*graph.getY_size()) {
-				for(int i=x-1+graph.getX_size();i>=0;i--) {
+				for(int i=x+graph.getX_size();i>=0;i--) {
 					if(colors[i][y+graph.getY_size()+1]==1) {
 						count2++;
 					}
 				}
 				if(count2%2==0) {
-					return false;
+					flag2=false;
 				}
+			}
+			if(!flag1&&!flag2) {
+				return false;
 			}
 		}
 		return true;

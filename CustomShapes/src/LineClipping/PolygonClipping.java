@@ -73,4 +73,17 @@ public class PolygonClipping {
 			}
 		}
 	}
+	
+	public void drawLine(int xi,int yi,int xf,int yf) {
+		int[][] points = Line.getpointsDDA(xi, xf, yi, yf);
+		int n = points.length;
+		for(int i=0;i<n;i++) {
+			if(border.inside(points[i][0],points[i][1])) {
+				graph.plotPoint(points[i][0], points[i][1], insideColor);
+			}
+			else {
+				graph.plotPoint(points[i][0], points[i][1], outsideColor);
+			}
+		}
+	}
 }

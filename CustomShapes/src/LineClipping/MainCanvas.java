@@ -49,13 +49,20 @@ public class MainCanvas extends JFrame implements MouseMotionListener, KeyListen
 			int[] x = {0+xs,-20+xs,20+xs};
 			int[] y = {0+ys,20+ys,20+ys};
 			border.setPoints(x,y);
-			PolygonClipping pc = new PolygonClipping(graph,border,Color.RED,Color.YELLOW,Color.BLACK);
-			pc.drawBorder();
 			Polygon clipped = new Polygon(graph,null,null);
 			int[] x1 = {0,-10,10};
 			int[] y1 = {30,5,5};
 			clipped.setPoints(x1, y1);
+			SutherlandHodgeman sh = new SutherlandHodgeman(graph,border,Color.RED,Color.YELLOW,
+					Color.BLACK);
+			sh.drawPolygon(clipped);
+			sh.drawBorder();
+			/*
+			PolygonClipping pc = new PolygonClipping(graph,border,Color.RED,Color.YELLOW,Color.BLACK);
+			//pc.drawLine(-100, 10, 100, 10);
 			pc.drawPolygon(clipped);
+			pc.drawBorder();
+			*/
 			/*
 			CohenSutherland cs = new CohenSutherland(graph,10+xs,15+ys,50+xs,55+ys,Color.RED,Color.YELLOW,Color.BLACK);
 			int[] x = {0,30,60};
