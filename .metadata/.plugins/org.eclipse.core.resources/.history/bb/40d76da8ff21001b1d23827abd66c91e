@@ -1,5 +1,0 @@
-package Custom;
-
-public interface Animatable {
-
-}
