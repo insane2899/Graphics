@@ -44,7 +44,7 @@ public class Editor {
 		this.northPanel = new JPanel(new GridLayout(2,2,20,20));
 		this.northPanel.setPreferredSize(new Dimension(500,30));
 		this.northPanel.setBorder(BorderFactory.createEmptyBorder(100,20,100,20));
-		this.southPanel = new JPanel(new GridLayout(8,1,20,20));
+		this.southPanel = new JPanel(new GridLayout(8,1,10,10));
 		this.southPanel.setPreferredSize(new Dimension(500,30));
 		this.southPanel.setBorder(BorderFactory.createEmptyBorder(50,20,50,20));
 		this.bird = new JButton("Bird");
