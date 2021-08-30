@@ -191,7 +191,18 @@ public class Graph {
 		g.fillOval(getProgramX(x)-r, getProgramY(y)-r, 2*r, 2*r);
 	}
 	
+	public void plotPoint(double x,double y,Color color) {
+		int r = 5;
+		g.setColor(color);
+		g.fillOval(getProgramX(x)-r, getProgramY(y)-r, 2*r, 2*r);
+	}
+	
 	public void plotPoint(int x,int y,Color color,int r) {
+		g.setColor(color);
+		g.fillOval(getProgramX(x)-r, getProgramY(y)-r, 2*r, 2*r);
+	}
+	
+	public void plotPoint(double x,double y,Color color,int r) {
 		g.setColor(color);
 		g.fillOval(getProgramX(x)-r, getProgramY(y)-r, 2*r, 2*r);
 	}
